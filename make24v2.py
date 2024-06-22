@@ -51,10 +51,9 @@ def make24(numberList):
             for ii in range(10):
                 if not ii in numbers:
                     continue
-                temp1 = str(i) + str(ii)
                 toShoot.append(ii)
                 numbers.pop(numbers.index(ii))
-                remain = int(temp1) - 24
+                remain = int(str(i) + str(ii)) - 24
                 if remain in numbers:
                     toShoot.append(subtraction)
                     toShoot.append(remain)
@@ -81,5 +80,50 @@ def make24(numberList):
             numbers = numberList[:4]
             toShoot.clear()
 
+    if numberList[4] == multiplication:
+        for i in numbers:
+            numbers.append(None)
+            if 0 in numbers:
+                numbers.pop(numbers.index(0))
+            if i == None:
+                i = ""
+            else:
+                numbers.pop(numbers.index(i))
+                toShoot = [i]
+            numbers.pop(numbers.index(None))
+            for ii in numbers:
+                if ii == None:
+                    continue
+                toShoot.append(ii)
+                remain = 24 / int(str(i) + str(ii))
+                numbers.pop(numbers.index(ii))
+                if remain in numbers:
+                    toShoot.append(multiplication)
+                    toShoot.append(int(remain))
+                    return(toShoot)
+                elif len(numbers) < 2:
+                    continue
+                if remain / numbers[0] / numbers[1] == 1 :
+                    toShoot.append(multiplication)
+                    toShoot.append(numbers[0])
+                    toShoot.append(multiplication)
+                    toShoot.append(numbers[1])
+                    return toShoot
+                if len(numbers) == 3:
+                    if remain / numbers[0] / numbers[1] / numbers[2] == 1:
+                        toShoot.append(multiplication)
+                        toShoot.append(numbers[0])
+                        toShoot.append(multiplication)
+                        toShoot.append(numbers[1])
+                        toShoot.append(multiplication)
+                        toShoot.append(numbers[2])
+                        return toShoot
+                toShoot.pop(-1)
+                numbers = numberList[:4]
+                numbers.pop(numbers.index(i))
+            toShoot.clear()
+            numbers = numberList[:4]
 
-print(make24([5,1,3,0,41]))
+
+
+print(make24([2,1,2,1,multiplication]))

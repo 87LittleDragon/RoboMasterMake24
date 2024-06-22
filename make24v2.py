@@ -123,7 +123,63 @@ def make24(numberList):
                 numbers.pop(numbers.index(i))
             toShoot.clear()
             numbers = numberList[:4]
+    
+    if numberList[4] == division:
+        toShoot = []
+        for i in range(10):
+            if i == 0:
+                i = ""
+                toShoot = []
+            elif not i in numbers:
+                continue
+            else:
+                numbers.pop(numbers.index(i))
+                toShoot.append(i)
+            for ii in range(11):
+                if not ii in numbers:
+                    continue
+                if ii == 10:
+                    continue
+                toShoot.append(ii)
+                numbers.pop(numbers.index(ii))
+                for iii in range(10):
+                    if not iii in numbers:
+                        continue
+                    if iii == 10:
+                        continue
+                    toShoot.append(iii)
+                    numbers.pop(numbers.index(iii))
+                    remain = int(str(i) + str(ii) + str(iii)) / 24
+                    print(int(str(i) + str(ii) + str(iii)))
+                    print(remain)
+                    if remain in numbers:
+                        toShoot.append(division)
+                        toShoot.append(int(remain))
+                        return toShoot
+                    temp = 1
+                    temp2 = ""
+                    toShoot_t1 = []
+                    toShoot_t2 = [division]
+                    for iiii in numbers:
+                        temp = temp * iiii
+                        toShoot_t1.append(division)
+                        toShoot_t1.append(iiii)
+                        if float(temp) == float(remain):
+                            toShoot.extend(toShoot_t1)
+                            return toShoot
+                        temp2 = int(str(temp2) + str(iiii))
+                        toShoot_t2.append(iiii)
+                        if float(temp2) == float(remain):
+                            toShoot.extend(toShoot_t2)
+                            return toShoot
+                    numbers = numberList[:4]
+                    toShoot.pop(-1)
+                toShoot.pop(-1)
+            toShoot.clear()
+ 
+                    
 
 
 
-print(make24([2,1,2,1,multiplication]))
+
+print(make24([4,8,2,6, division]))

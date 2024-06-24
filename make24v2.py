@@ -81,18 +81,17 @@ def make24(numberList):
             toShoot.clear()
 
     if numberList[4] == multiplication:
-        for i in numbers:
-            numbers.append(None)
-            if 0 in numbers:
-                numbers.pop(numbers.index(0))
-            if i == None:
+        for i in range(10):
+            if i == 0:
                 i = ""
+                toShoot = []
+            elif not i in numbers:
+                continue
             else:
                 numbers.pop(numbers.index(i))
                 toShoot = [i]
-            numbers.pop(numbers.index(None))
-            for ii in numbers:
-                if ii == None:
+            for ii in range(10):
+                if not ii in numbers:
                     continue
                 toShoot.append(ii)
                 remain = 24 / int(str(i) + str(ii))
@@ -182,4 +181,4 @@ def make24(numberList):
 
 
 
-print(make24([4,8,2,6, division]))
+print(make24([4,8,3,6, multiplication]))

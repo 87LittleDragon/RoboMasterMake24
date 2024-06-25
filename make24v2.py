@@ -75,7 +75,7 @@ def make24(numberList):
                     toShoot.append(numbers[0])
                     return toShoot
                 numbers = numberList[:4]
-                numbers.pop(numbers.index(i))
+                #numbers.pop(numbers.index(i))
                 toShoot.pop(-1)
             numbers = numberList[:4]
             toShoot.clear()
@@ -119,7 +119,7 @@ def make24(numberList):
                         return toShoot
                 toShoot.pop(-1)
                 numbers = numberList[:4]
-                numbers.pop(numbers.index(i))
+                #numbers.pop(numbers.index(i))
             toShoot.clear()
             numbers = numberList[:4]
     
@@ -181,4 +181,4 @@ def make24(numberList):
 
 
 
-print(make24([4,8,3,6, multiplication]))
+print(make24([6, 1, 3, 2, addition]))

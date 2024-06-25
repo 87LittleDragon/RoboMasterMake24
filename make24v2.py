@@ -40,6 +40,12 @@ def make24(numberList):
                         return toShoot
                 toShoot.pop(-1)
                 numbers = numberList[:4]
+                if i == "":
+                    if 0 in numbers:
+                        numbers.pop(numbers.index(0))
+                else:
+                    numbers.pop(numbers.index(i))
+            numbers = numberList[:4]
     
     if numberList[4] == subtraction:
         for i in range(2,10):
@@ -149,8 +155,8 @@ def make24(numberList):
                     toShoot.append(iii)
                     numbers.pop(numbers.index(iii))
                     remain = int(str(i) + str(ii) + str(iii)) / 24
-                    print(int(str(i) + str(ii) + str(iii)))
-                    print(remain)
+                    # print(int(str(i) + str(ii) + str(iii)))
+                    # print(remain)
                     if remain in numbers:
                         toShoot.append(division)
                         toShoot.append(int(remain))
@@ -172,6 +178,7 @@ def make24(numberList):
                             toShoot.extend(toShoot_t2)
                             return toShoot
                     numbers = numberList[:4]
+                    numbers.pop(numbers.index(iii))
                     toShoot.pop(-1)
                 toShoot.pop(-1)
             toShoot.clear()
@@ -179,6 +186,14 @@ def make24(numberList):
                     
 
 
+f = open("output.txt", "w")
+for i in range(9999):
+    l = [int(x) for x in str(i)]
+    while(len(l) < 4):
+        l.insert(0,0)
+    f.write(str(l))
+    l.append(division)
+    f.write(str(make24(l)))
+    f.write("\n")
 
-
-print(make24([6, 1, 3, 2, addition]))
+print(make24([3,6,9,6,addition]))

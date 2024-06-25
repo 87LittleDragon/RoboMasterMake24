@@ -4,8 +4,9 @@ multiplication = 33
 division = 42
 
 def make24(numberList):
-    numbers = numberList[:4]
-    if numberList[4] == addition:
+    numberList.insert(-1,"")
+    numbers = numberList[:-1]
+    if numberList[-1] == addition:
         for i in range(2,-1,-1):
             if i == 0:
                 i = ""
@@ -25,29 +26,29 @@ def make24(numberList):
                 toShoot.append(ii)
                 numbers[numbers.index(ii)] = None
                 if remain in numbers:
-                    toShoot.append(numberList[4])
+                    toShoot.append(numberList[-1])
                     toShoot.append(remain)
                     return toShoot
                 for iii in range(remain, -1, -1):
                     if iii not in numbers:
                         continue
-                    toShoot.append(numberList[4])
+                    toShoot.append(numberList[-1])
                     toShoot.append(iii)
                     numbers[numbers.index(iii)] = None
                     if remain - iii in numbers:
-                        toShoot.append(numberList[4])
+                        toShoot.append(numberList[-1])
                         toShoot.append(remain - iii)
                         return toShoot
                 toShoot.pop(-1)
-                numbers = numberList[:4]
+                numbers = numberList[:-1]
                 if i == "":
                     if 0 in numbers:
                         numbers.pop(numbers.index(0))
                 else:
                     numbers.pop(numbers.index(i))
-            numbers = numberList[:4]
+            numbers = numberList[:-1]
     
-    if numberList[4] == subtraction:
+    if numberList[-1] == subtraction:
         for i in range(2,10):
             if not i in numbers:
                 continue
@@ -80,13 +81,13 @@ def make24(numberList):
                     toShoot.append(numbers[1])
                     toShoot.append(numbers[0])
                     return toShoot
-                numbers = numberList[:4]
+                numbers = numberList[:-1]
                 #numbers.pop(numbers.index(i))
                 toShoot.pop(-1)
-            numbers = numberList[:4]
+            numbers = numberList[:-1]
             toShoot.clear()
 
-    if numberList[4] == multiplication:
+    if numberList[-1] == multiplication:
         for i in range(10):
             if i == 0:
                 i = ""
@@ -124,12 +125,12 @@ def make24(numberList):
                         toShoot.append(numbers[2])
                         return toShoot
                 toShoot.pop(-1)
-                numbers = numberList[:4]
+                numbers = numberList[:-1]
                 #numbers.pop(numbers.index(i))
             toShoot.clear()
-            numbers = numberList[:4]
+            numbers = numberList[:-1]
     
-    if numberList[4] == division:
+    if numberList[-1] == division:
         toShoot = []
         for i in range(10):
             if i == 0:
@@ -140,23 +141,30 @@ def make24(numberList):
             else:
                 numbers.pop(numbers.index(i))
                 toShoot.append(i)
-            for ii in range(11):
+            for ii in range(10):
                 if not ii in numbers:
-                    continue
-                if ii == 10:
+                    numbers = numberList[:-1]
+                    numbers.pop(numbers.index(i))
                     continue
                 toShoot.append(ii)
                 numbers.pop(numbers.index(ii))
                 for iii in range(10):
                     if not iii in numbers:
-                        continue
-                    if iii == 10:
+                        numbers = numberList[:-1]
+                        numbers.pop(numbers.index(ii))
+                        numbers.pop(numbers.index(i))
                         continue
                     toShoot.append(iii)
                     numbers.pop(numbers.index(iii))
                     remain = int(str(i) + str(ii) + str(iii)) / 24
-                    # print(int(str(i) + str(ii) + str(iii)))
                     # print(remain)
+                    # print(numbers)
+                    if remain == 0:
+                        numbers = numberList[:-1]
+                        numbers.pop(numbers.index(iii))
+                        numbers.pop(numbers.index(ii))
+                        numbers.pop(numbers.index(i))
+                        continue
                     if remain in numbers:
                         toShoot.append(division)
                         toShoot.append(int(remain))
@@ -165,7 +173,9 @@ def make24(numberList):
                     temp2 = ""
                     toShoot_t1 = []
                     toShoot_t2 = [division]
-                    for iiii in numbers:
+                    for iiii in range(10):
+                        if not iiii in numbers:
+                            continue
                         temp = temp * iiii
                         toShoot_t1.append(division)
                         toShoot_t1.append(iiii)
@@ -177,8 +187,10 @@ def make24(numberList):
                         if float(temp2) == float(remain):
                             toShoot.extend(toShoot_t2)
                             return toShoot
-                    numbers = numberList[:4]
+                    numbers = numberList[:-1]
                     numbers.pop(numbers.index(iii))
+                    numbers.pop(numbers.index(ii))
+                    numbers.pop(numbers.index(i))
                     toShoot.pop(-1)
                 toShoot.pop(-1)
             toShoot.clear()
@@ -196,4 +208,4 @@ for i in range(9999):
     f.write(str(make24(l)))
     f.write("\n")
 
-print(make24([3,6,9,6,addition]))
+# print(make24([2, 1, 4, 8,division]))

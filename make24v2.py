@@ -86,89 +86,97 @@ def make24(numberList):
             toShoot.clear()
 
     if numberList[-1] == multiplication:
+        toShoot = []
         for i in range(10):
+            numbers = numberList[:-1]
+            if toShoot != []:
+                toShoot.clear()
+
             if i == 0:
                 i = ""
                 toShoot = []
             elif not i in numbers:
                 continue
             else:
-                toShoot = [i]
-            numbers.pop(numbers.index(i))
-            for ii in range(10):
+                numbers.pop(numbers.index(i))
+                toShoot = [i]    
+            for ii in range(9,-1,-1):
+                numbers = numberList[:-1]
+                numbers.pop(numbers.index(i))
+                toShoot = toShoot[:0]
                 if not ii in numbers:
-                    numbers = numberList[:-1]
-                    numbers.pop(numbers.index(i))
-                    if i != "":
-                        toShoot = [i]
-                    else:
-                        toShoot = []
                     continue
                 toShoot.append(ii)
                 numbers.pop(numbers.index(ii))
                 if int(str(i) + str(ii)) == 0:
-                    numbers = numberList[:-1]
-                    numbers.pop(numbers.index(i))
-                    if i != "":
-                        toShoot = [i]
-                    else:
-                        toShoot = []
                     continue
                 remain = 24 / int(str(i) + str(ii))
                 if remain in numbers:
                     toShoot.append(multiplication)
-                    toShoot.append(int(remain))
+                    toShoot.append(remain)
                     return toShoot
-                temp1 = 1
                 for iii in range(2, 10):
+                    toShoot.append(multiplication)
+                    numbers = numberList[:-1]
+                    numbers.pop(numbers.index(i))
+                    numbers.pop(numbers.index(ii))
+                    toShoot = toShoot[:(toShoot.index(multiplication))]
                     if not iii in numbers:
                         continue
-                    temp1 = temp1 / int(iii)
-                    if not temp1.is_integer():
-                        temp1 = temp1 * int(iii)
-                        continue
-                    temp1 = int(temp1)
+                    temp1 = remain / iii
                     toShoot.append(multiplication)
                     toShoot.append(iii)
                     numbers.pop(numbers.index(iii))
                     if temp1 in numbers:
                         toShoot.append(multiplication)
-                        toShoot.append(iii)
+                        toShoot.append(temp1)
                         return toShoot
+                    if not temp1.is_integer():
+                        continue
                     for iiii in range(2, 10):
-                        if not iiii in numbers:
-                            continue
-                        temp1 = temp1 / iiii
-                        if temp1.is_integer():
-                            temp1 = int(temp1)
-                        toShoot.append(multiplication)
-                        toShoot.append(iiii)
-                        numbers.pop(numbers.index(iiii))
-                        if temp1 in numbers:
-                            toShoot.append(multiplication)
-                            toShoot.append(temp1)
-                            return toShoot
                         numbers = numberList[:-1]
                         numbers.pop(numbers.index(i))
                         numbers.pop(numbers.index(ii))
                         numbers.pop(numbers.index(iii))
-                        toShoot.pop(-1)
-                        toShoot.pop(-1)
-                    numbers = numberList[:-1]
-                    numbers.pop(numbers.index(i))
-                    numbers.pop(numbers.index(ii))
-                    toShoot.clear()
-                    if i != "":
-                        toShoot.append(i)
-                    toShoot.append(ii)
-                numbers = numberList[:-1]
-                numbers.pop(numbers.index(i))
-                toShoot.clear()
-                if i != "":
-                    toShoot.append(i)
-            numbers = numberList[:-1]
-            toShoot.clear()
-    
+                        toShoot = toShoot[:(toShoot.index(multiplication) + 2)]
+                        if not iiii in numbers:
+                            continue
+                        temp2 = temp1 / iiii
+                        toShoot.append(multiplication)
+                        toShoot.append(iiii)
+                        numbers.pop(numbers.index(iiii))
+                        if temp2 in numbers:
+                            toShoot.append(multiplication)
+                            toShoot.append(temp2)
+                            return toShoot
+                        if not temp2.is_integer():
+                            continue
+                        if i != "":
+                            continue
+                        for iiiii in range(2, 10):
+                            numbers = numberList[:-1]
+                            numbers.pop(numbers.index(i))
+                            numbers.pop(numbers.index(ii))
+                            numbers.pop(numbers.index(iii))
+                            numbers.pop(numbers.index(iiii))
+                            toShoot = toShoot[:(toShoot.index(multiplication) + 4)]
+                            if not iiiii in numbers:
+                                continue
+                            temp3 = temp2 / iiiii
+                            toShoot.append(multiplication)
+                            toShoot.append(iiiii)
+                            numbers.pop(numbers.index(iiiii))
+                            if temp3 in numbers:
+                                toShoot.append(multiplication)
+                                toShoot.append(temp3)
+                                return toShoot
+                            
+
+                            
+                        
+
+                        
+                                       
     if numberList[-1] == division:
         toShoot = []
         for i in range(10):
@@ -246,5 +254,5 @@ for i in range(10000):
     l.append(multiplication)
     f.write(str(make24(l)))
     f.write("\n")
-
-# print(make24([9, 4, 2, 9, addition]))
+print([2,4,3,7,multiplication])
+print(make24([2, 4, 3, 7, multiplication]))

@@ -243,7 +243,7 @@ for i in range(10000):
     while(len(l) < 4):
         l.insert(0,0)
     f.write(str(l))
-    l.append(subtraction)
+    l.append(multiplication)
     f.write(str(make24(l)))
     f.write("\n")
 

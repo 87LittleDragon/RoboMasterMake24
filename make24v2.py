@@ -39,7 +39,7 @@ def make24(numberList):
                         toShoot.append(addition)
                         toShoot.append(remain)
                         return toShoot
-                toShoot = toShoot[:1]
+                toShoot.clear()
                 numbers = numberList[:-1]
                 numbers.pop(numbers.index(i))
             toShoot.clear()
@@ -251,8 +251,8 @@ for i in range(10000):
     while(len(l) < 4):
         l.insert(0,0)
     f.write(str(l))
-    l.append(multiplication)
+    l.append(addition)
     f.write(str(make24(l)))
     f.write("\n")
-print([2,4,3,7,multiplication])
-print(make24([2, 4, 3, 7, multiplication]))
+# print([2,4,3,7,addition])
+# print(make24([2, 4, 3, 7, addition]))

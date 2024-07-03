@@ -6,43 +6,80 @@ division = 42
 def make24(numberList):
     numberList.insert(-1,"")
     numbers = numberList[:-1]
+    toShoot = []
     if numberList[-1] == addition:
         for i in range(9, -1, -1):
+            toShoot.clear()
+            numbers = numberList[:-1]
             if i == 0:
-                i = ""
+                i = ''
                 toShoot = []
             elif not i in numbers:
                 continue
             else:
                 toShoot = [i]
-            numbers.pop(numbers.index(i))
+                numbers.remove(i)
             for ii in range(9, -1, -1):
+                if i == '':
+                    toShoot = []
+                else:
+                    toShoot = [i]
+                numbers = numberList[:-1]
+                numbers.remove(i)
+                
                 if not ii in numbers:
-                    numbers = numberList[:-1]
-                    numbers.pop(numbers.index(i))
                     continue
                 toShoot.append(ii)
-                numbers.pop(numbers.index(ii))
+                numbers.remove(ii)
+                
                 remain = 24 - int(str(i) + str(ii))
+                if remain < 0:
+                    continue
+                
                 if remain in numbers:
                     toShoot.append(addition)
                     toShoot.append(remain)
                     return toShoot
-                for iii in range(10):
-                    if not iii in numbers:
+                for iii in range(100):
+                    if i == '':
+                        toShoot = [ii]
+                    else:
+                        toShoot = [i, ii]
+                    numbers = numberList[:-1]
+                    numbers.remove(i)
+                    numbers.remove(ii)
+                    remain = 24 - int(str(i) + str(ii))
+                    iiii = list(map(int, str(iii)))
+                    toShoot.append(addition)
+                    isSubset = True
+                    for j in iiii:
+                        if not j in numbers:
+                            isSubset = False
+                            continue
+                        toShoot.append(j)
+                        numbers.remove(j)
+                    if not isSubset:
                         continue
                     remain -= iii
-                    numbers.pop(numbers.index(iii))
-                    toShoot.append(addition)
-                    toShoot.append(iii)
+                    if remain == 0:
+                        return toShoot
                     if remain in numbers:
                         toShoot.append(addition)
                         toShoot.append(remain)
                         return toShoot
-                toShoot.clear()
-                numbers = numberList[:-1]
-                numbers.pop(numbers.index(i))
-            toShoot.clear()
+                    for iiiii in range(1, 10):
+                        numbers1 = numbers[:]
+                        if not iiiii in numbers:
+                            continue
+                        numbers1.remove(iiiii)
+                        if remain - iiiii in numbers1:
+                            toShoot.append(addition)
+                            toShoot.append(iiiii)
+                            toShoot.append(addition)
+                            toShoot.append(remain - iiiii)
+                            return toShoot
+                        
+                
     
     if numberList[-1] == subtraction:
         for i in range(2,10):
@@ -103,7 +140,10 @@ def make24(numberList):
             for ii in range(9,-1,-1):
                 numbers = numberList[:-1]
                 numbers.pop(numbers.index(i))
-                toShoot = toShoot[:0]
+                if i != '':
+                    toShoot = [i]
+                else:
+                    toShoot = []
                 if not ii in numbers:
                     continue
                 toShoot.append(ii)
@@ -169,13 +209,8 @@ def make24(numberList):
                             if temp3 in numbers:
                                 toShoot.append(multiplication)
                                 toShoot.append(temp3)
-                                return toShoot
-                            
-
-                            
-                        
-
-                        
+                                return toShoot      
+              
                                        
     if numberList[-1] == division:
         toShoot = []
@@ -251,8 +286,7 @@ for i in range(10000):
     while(len(l) < 4):
         l.insert(0,0)
     f.write(str(l))
-    l.append(addition)
+    l.append(division)
     f.write(str(make24(l)))
     f.write("\n")
-# print([2,4,3,7,addition])
-# print(make24([2, 4, 3, 7, addition]))
+# print(make24([1, 0, 1, 4, addition]))
